@@ -17,8 +17,8 @@ TEST(AggregateByKeyTest, CountingAggregatedValues) {
         AsDataFlow(input)
             | AggregateByKey(
                 std::size_t{0},
-                [](std::size_t& accumulated, const std::string&) { ++accumulated; },
-                [](const std::size_t& accumulated) { return accumulated; }
+                [](const std::string&, std::size_t& accumulated) { ++accumulated; },
+                [](const std::string& token) { return token; }
             )
             | AsVector();
 
@@ -47,7 +47,7 @@ TEST(AggregateByKeyTest, AggregatingWithSeveralOutputsForEachKey) {
         AsDataFlow(employees)
             | AggregateByKey(
                 std::vector<Employee>{},
-                [](std::vector<Employee>& accumulated, const Employee& employee) {
+                [](const Employee& employee, std::vector<Employee>& accumulated) {
                     if (accumulated.size() == 2) {
                         return;
                     }
