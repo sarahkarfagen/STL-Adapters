@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     | Split("\n ,.;")
     | Transform(
         [](std::string& token) { 
-            std::transform(token.begin(), token.end(), [](char c){return std::tolower(c);});
+            std::transform(token.begin(), token.end(), token.begin(), [](char c){return std::tolower(c);});
             return token;
         })
     | AggregateByKey(
