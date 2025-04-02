@@ -34,3 +34,5 @@
 .clang-format
 *build*
 .cache/
+.vscode
+build
